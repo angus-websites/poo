@@ -1,0 +1,6 @@
+Dockerfile
+node_modules
+.venv
+.idea
+*.sqlite3
+.gitignore

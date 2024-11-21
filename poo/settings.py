@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,10 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-%q)0yj6leg(fmv+(+4p8ka$5vb5(csoqk&=a%ffydo9_wh8l54"
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-%q)0yj6leg(fmv+(+4p8ka$5vb5(csoqk&=a%ffydo9_wh8l54')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = []
 
@@ -83,12 +83,34 @@ WSGI_APPLICATION = "poo.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# Fetch environment variables
+DB_ENGINE = os.getenv('DB_ENGINE', 'sqlite')  # Default to 'sqlite' if not set
+DB_HOST = os.getenv('DB_HOST', 'localhost')
+DB_NAME = os.getenv('DB_NAME', 'your_db_name')
+DB_USER = os.getenv('DB_USER', 'your_db_user')
+DB_PASSWORD = os.getenv('DB_PASSWORD', 'your_db_password')
+DB_PORT = os.getenv('DB_PORT', '5432')
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Default to SQLite if DB_ENGINE is not set
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+# PostgreSQL configuration (only applied when DB_ENGINE is set to 'postgres')
+if DB_ENGINE == 'postgres':
+    DATABASES["default"] = {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASSWORD,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT,
+    }
 
 
 # Password validation
