@@ -6,6 +6,13 @@ __pycache__
 db.sqlite3
 media
 
+# Node
+node_modules/
+
+# Assets
+static/CACHE
+static/src/output.css
+
 # Backup files #
 *.bak
 
