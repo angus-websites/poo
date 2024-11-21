@@ -26,11 +26,21 @@
  
 </head>
  
-<body class="bg-green-50">
-    <div class="container mx-auto mt-4">
+<body class="bg-green-50 flex flex-col min-h-screen">
+    <div class="container mx-auto mt-4 flex-grow">
         {% block content %}
         {% endblock content %}
     </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-emerald-800 text-white text-center py-4 mt-12">
+        <p>&copy; <span id="year"></span> <strong>Poo</strong> | Designed by <a href="https://angusgoody.com/" target="_blank"><strong>Angus Goody</strong></a></p>
+    </footer>
+
+    <script>
+        // Dynamically set the current year in the footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
 </body>
  
 </html>
