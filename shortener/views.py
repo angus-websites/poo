@@ -2,24 +2,37 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from .models import URL
 from .utils import generate_short_code
-from .forms import URLForm
 
 def shorten_url(request):
     if request.method == 'POST':
-        form = URLForm(request.POST)
-        if form.is_valid():
-            original_url = form.cleaned_data['original_url']
+        # Retrieve the original URL from POST data
+        original_url = request.POST.get('original_url')
+
+        # Basic validation check
+        if not original_url:
+            return render(request, 'shortener/index.html', {'error': 'URL is required'})
+
+        # Check if the URL already exists in the database
+        existing_url = URL.objects.filter(original_url=original_url).first()
+        if existing_url:
+            # If the URL already exists, use the existing short code
+            short_code = existing_url.short_code
+        else:
+            # Generate a unique short code since the URL does not exist
             short_code = generate_short_code()
-            url, created = URL.objects.get_or_create(original_url=original_url, defaults={'short_code': short_code})
 
-            return JsonResponse({
-                'original_url': url.original_url,
-                'short_url': request.build_absolute_uri(f'/{url.short_code}')
-            })
-    else:
-        form = URLForm()
+            # Save the URL to the database
+            URL.objects.create(original_url=original_url, short_code=short_code)
 
-    return render(request, 'shortener/index.html', {'form': form})
+        # Redirect to the view that displays the shortened URL
+        return redirect('shortened', short_code=short_code)
+
+    # Render the form if the request method is not POST
+    return render(request, 'shortener/index.html')
+
+def shortened_url(request, short_code):
+    """View to display the shortened URL."""
+    return render(request, 'shortener/shortened.html', {'short_url': request.build_absolute_uri(f"/{short_code}")})
 
 def redirect_url(request, short_code):
     url = get_object_or_404(URL, short_code=short_code)
