@@ -6,12 +6,16 @@ RUN npm install
 COPY . /app/
 RUN npm run build
 
-# Second stage: Python environment for Django and Gunicorn
-FROM python:3.13-slim AS python-base
+# Second stage: Combined Python and Nginx environment
+FROM python:3.13-slim
+
+# Set the working directory inside the container
 WORKDIR /app
+
+# Install system dependencies for Nginx, PostgreSQL, and Python
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-    gcc libpq-dev \
+    gcc libpq-dev nginx \
     && apt-get clean
 
 # Install Python dependencies
@@ -21,28 +25,23 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 # Copy the rest of the application files
 COPY . /app/
 
-# Collect static files
+# Copy static files generated from the build stage
 COPY --from=build /app/static /app/staticfiles
+
+# Collect static files (ensure the static folder is correctly set)
 RUN python manage.py collectstatic --noinput --verbosity 2
-
-# Third stage: Production environment with Nginx
-FROM nginx:alpine AS production
-WORKDIR /app
-
-# Copy application code and static files from python-base stage
-COPY --from=python-base /app /app
 
 # Copy the Nginx configuration file
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Ensure the entrypoint script is accessible
-COPY entrypoint.sh /app
+RUN addgroup --system nginx && adduser --system --ingroup nginx nginx
+
+# Ensure the entrypoint script is accessible and executable
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 
 # Expose the required port for Nginx
 EXPOSE 80
 
-# Set the entrypoint script as executable
-RUN chmod +x /app/entrypoint.sh
-
-# Start Nginx and Gunicorn
-CMD /bin/sh /app/entrypoint.sh
+# Start Gunicorn and Nginx via the entrypoint script
+CMD ["/app/entrypoint.sh"]
