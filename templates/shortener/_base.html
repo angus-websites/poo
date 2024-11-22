@@ -18,10 +18,11 @@
     <meta name="apple-mobile-web-app-title" content="Poo" />
     <link rel="manifest" href="{% static 'images/favicons/site.webmanifest' %}" />
     <title>Poo</title>
- 
+    
+    {% compress css %}
     <link rel="stylesheet"
         href="{% static 'src/output.css' %}">
- 
+    {% endcompress %}
 </head>
  
 <body class="bg-green-50 flex flex-col min-h-screen">
