@@ -4,10 +4,14 @@
 echo "Applying database migrations..."
 python manage.py migrate --noinput
 
-# Collect static files (if necessary)
+# Collect static files
 echo "Collecting static files..."
 python manage.py collectstatic --noinput --verbosity 2
 
-# Start Gunicorn
+# Start Gunicorn in the background
 echo "Starting Gunicorn..."
-exec gunicorn poo.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 300
+gunicorn poo.wsgi:application --bind unix:/app/gunicorn.sock --workers 3 --timeout 300 &
+
+# Start Nginx
+echo "Starting Nginx..."
+nginx -g "daemon off;"
