@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     "compressor",
 ]
 
+CSRF_TRUSTED_ORIGINS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
