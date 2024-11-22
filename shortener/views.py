@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse
 from .models import URL
 from .utils import generate_short_code
 
@@ -32,6 +31,10 @@ def shorten_url(request):
 
 def shortened_url(request, short_code):
     """View to display the shortened URL."""
+
+    # Validate the short code exists in the database
+    get_object_or_404(URL, short_code=short_code)
+
     return render(request, 'shortener/shortened.html', {'short_url': request.build_absolute_uri(f"/{short_code}")})
 
 def redirect_url(request, short_code):

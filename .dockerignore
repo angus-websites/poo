@@ -1,0 +1,9 @@
+Dockerfile
+node_modules
+.venv
+.idea
+*.sqlite3
+.gitignore
+.git
+*__pycache__
+

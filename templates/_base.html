@@ -10,20 +10,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content=
         "width=device-width, initial-scale=1.0">
-    <title>Django + Tailwind CSS</title>
+
+    <link rel="icon" type="image/png" href="{% static 'images/favicons/favicon-96x96.png' %}" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="{% static 'images/favicons/favicon.svg' %}" />
+    <link rel="shortcut icon" href="{% static 'images/favicons/favicon.ico' %}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicons/apple-touch-icon.png' %}" />
+    <meta name="apple-mobile-web-app-title" content="Poo" />
+    <link rel="manifest" href="{% static 'images/favicons/site.webmanifest' %}" />
+    <title>Poo</title>
  
-    {% compress css %}
     <link rel="stylesheet"
         href="{% static 'src/output.css' %}">
-    {% endcompress %}
  
 </head>
  
-<body class="bg-green-50">
-    <div class="container mx-auto mt-4">
+<body class="bg-green-50 flex flex-col min-h-screen">
+    <div class="container mx-auto mt-4 flex-grow">
         {% block content %}
         {% endblock content %}
     </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-emerald-800 text-white text-center py-4 mt-12">
+        <p>&copy; <span id="year"></span> <strong>Poo</strong> | Designed by <a href="https://angusgoody.com/" target="_blank"><strong>Angus Goody</strong></a></p>
+    </footer>
+
+    <script>
+        // Dynamically set the current year in the footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
 </body>
  
 </html>
