@@ -29,7 +29,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-%q)0yj6leg(fmv+(+4p8ka$5vb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+# Get the ALLOWED_HOSTS environment variable from the environment or .env file
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 
 # COMPRESSOR SETTINGS
 
