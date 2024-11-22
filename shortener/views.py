@@ -39,4 +39,9 @@ def shortened_url(request, short_code):
 
 def redirect_url(request, short_code):
     url = get_object_or_404(URL, short_code=short_code)
+
+    # Update the access information
+    url.record_access()
+
+    # Redirect to the original URL
     return redirect(url.original_url)
