@@ -19,7 +19,6 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -30,15 +29,27 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-%q)0yj6leg(fmv+(+4p8ka$5vb
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 # Get the ALLOWED_HOSTS environment variable from the environment or .env file
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.1/howto/static-files/
+
+STATIC_URL = "static/"
+
+STATIC_ROOT = BASE_DIR / "static"
+
 
 # COMPRESSOR SETTINGS
 
 COMPRESS_ROOT = BASE_DIR / 'static'
 
-COMPRESS_ENABLED = False
+COMPRESS_ENABLED = True
 
-STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder'
+]
 
 # Application definition
 
@@ -53,7 +64,9 @@ INSTALLED_APPS = [
     "compressor",
 ]
 
-CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_HOSTS', 'localhost').split(',')
+if os.getenv('CSRF_HOSTS', False):
+    CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_HOSTS', 'http://localhost/').split(',')
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -98,8 +111,6 @@ DB_USER = os.getenv('DB_USER', 'your_db_user')
 DB_PASSWORD = os.getenv('DB_PASSWORD', 'your_db_password')
 DB_PORT = os.getenv('DB_PORT', '5432')
 
-# Base directory of the project
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Default to SQLite if DB_ENGINE is not set
 DATABASES = {
@@ -145,15 +156,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = "static/"
-
-STATICFILES_DIRS = [BASE_DIR / "static"]
-
-print('STATICFILES_DIRS:', STATICFILES_DIRS)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
