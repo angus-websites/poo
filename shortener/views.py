@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import URL
 from .utils import generate_short_code
+from django.http import HttpRequest, HttpResponse
 
-def shorten_url(request):
+def shorten_url(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
         # Retrieve the original URL from POST data
         original_url = request.POST.get('original_url')
@@ -29,7 +30,7 @@ def shorten_url(request):
     # Render the form if the request method is not POST
     return render(request, 'shortener/index.html')
 
-def shortened_url(request, short_code):
+def shortened_url(request: HttpRequest, short_code: str) -> HttpResponse:
     """View to display the shortened URL."""
 
     # Validate the short code exists in the database
@@ -37,7 +38,7 @@ def shortened_url(request, short_code):
 
     return render(request, 'shortener/shortened.html', {'short_url': request.build_absolute_uri(f"/{short_code}")})
 
-def redirect_url(request, short_code):
+def redirect_url(request: HttpRequest, short_code: str) -> HttpResponse:
     url = get_object_or_404(URL, short_code=short_code)
 
     # Update the access information
