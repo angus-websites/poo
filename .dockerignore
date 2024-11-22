@@ -4,3 +4,6 @@ node_modules
 .idea
 *.sqlite3
 .gitignore
+.git
+*__pycache__
+

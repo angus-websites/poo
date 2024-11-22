@@ -35,7 +35,7 @@ ALLOWED_HOSTS = []
 
 COMPRESS_ROOT = BASE_DIR / 'static'
 
-COMPRESS_ENABLED = True
+COMPRESS_ENABLED = False
 
 STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 
@@ -95,6 +95,7 @@ DB_USER = os.getenv('DB_USER', 'your_db_user')
 DB_PASSWORD = os.getenv('DB_PASSWORD', 'your_db_password')
 DB_PORT = os.getenv('DB_PORT', '5432')
 
+# Base directory of the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Default to SQLite if DB_ENGINE is not set
@@ -148,6 +149,8 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
+
+print('STATICFILES_DIRS:', STATICFILES_DIRS)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
