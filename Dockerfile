@@ -26,7 +26,7 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 COPY . /app/
 
 # Copy static files generated from the build stage
-COPY --from=build /app/static /app/staticfiles
+COPY --from=build /app/static /app/static
 
 # Collect static files (ensure the static folder is correctly set)
 RUN python manage.py collectstatic --noinput --verbosity 2
