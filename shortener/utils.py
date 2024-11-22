@@ -5,7 +5,6 @@ from .models import URL
 def generate_short_code(initial_length: int = 6, max_length: int = 10) -> str:
     """
     Generate a random short code for the URL. Automatically increases length if no unique code is found.
-
     :param initial_length: Starting length for the short code.
     :param max_length: Maximum length the short code can grow to.
     :return: A unique short code as a string.
