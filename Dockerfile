@@ -34,6 +34,7 @@ RUN python manage.py collectstatic --noinput --verbosity 2
 # Copy the Nginx configuration file
 COPY nginx.conf /etc/nginx/nginx.conf
 
+# Create a new user and group for Nginx
 RUN addgroup --system nginx && adduser --system --ingroup nginx nginx
 
 # Ensure the entrypoint script is accessible and executable
