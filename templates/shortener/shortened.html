@@ -11,8 +11,10 @@
                 <h2 class="text-2xl font-semibold text-emerald-800">Your new URL...</h2>
                 <div class="w-full mt-2 ">
                 <div class="relative">
-                    <label id="shortened-url-text" type="text" class="col-span-6 bg-gray-50 text-gray-500 text-sm rounded-lg  block w-full px-2.5 py-4">{{ short_url }} </label>
-
+                    <label id="shortened-url-text" 
+                       class="col-span-6 bg-gray-50 text-gray-500 text-sm rounded-lg block w-full px-2.5 py-4 truncate overflow-hidden">
+                    {{ short_url }}
+                    </label>
                     <!-- Updated button with both icons preloaded -->
                     <button id="copy-url-button" class="absolute end-2.5 top-1/2 -translate-y-1/2 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold transition duration-300 rounded-lg py-2 px-2.5 inline-flex items-center justify-center">
                         <span id="button-icon-copy" class="inline-flex items-center">
