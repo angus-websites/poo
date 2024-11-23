@@ -2,9 +2,9 @@ name: CD Pipeline
 
 on:
   workflow_dispatch:
-  # push:
-  #   branches:
-  #     - main
+  push:
+    branches:
+      - main
 
 env:
   IMAGE_NAME: poo-image
