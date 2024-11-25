@@ -62,8 +62,19 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "shortener",
     "compressor",
-    "message"
+    "message",
+    "markdownify"
 ]
+
+MARKDOWNIFY = {
+    "default": {
+        "MARKDOWN_EXTENSIONS": [
+            "markdown.extensions.fenced_code",
+            "markdown.extensions.codehilite",
+        ],
+        "STRIP": True,
+    }
+}
 
 if os.getenv('CSRF_HOSTS', False):
     CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_HOSTS', 'http://localhost/').split(',')

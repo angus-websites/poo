@@ -1,0 +1,14 @@
+{% extends '../_base.html' %}
+{% load markdownify %}
+
+{% block content %}
+    <div class="container mx-auto mt-12">
+    
+        <!-- Message form -->
+        <div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
+            <div class="markdown-content text-slate-800">
+                {{ message.content|markdownify }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
