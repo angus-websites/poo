@@ -1,9 +1,9 @@
-{% extends "shortener/_base.html" %}
+{% extends "shortener/../_base.html" %}
 
 {% block content %}
     <div class="container mx-auto mt-12">
         <!-- Include the header -->
-        {% include "shortener/_header.html" %}
+        {% include "shortener/../_header.html" %}
 
         <div class="max-w-lg mx-auto text-center">
             <!-- Display Shortened URL -->
@@ -11,7 +11,7 @@
                 <h2 class="text-2xl font-semibold text-emerald-800">Your new URL...</h2>
                 <div class="w-full mt-2 ">
                 <div class="relative">
-                    <label id="shortened-url-text" 
+                    <label id="shortened-url-text"
                        class="col-span-6 bg-gray-50 text-gray-500 text-sm rounded-lg block w-full px-2.5 py-4 truncate overflow-hidden">
                     {{ short_url }}
                     </label>
@@ -34,7 +34,7 @@
             </div>
             </div>
 
-            
+
 
             <!-- Shorten Again Button -->
             <a
@@ -55,20 +55,20 @@
     const buttonIconTick = document.getElementById('button-icon-tick');
 
     copyButton.addEventListener('click', function () {
-        
+
         // Use the Clipboard API to copy the label text
         const textToCopy = shortenedUrlLabel.textContent.trim();
 
         navigator.clipboard.writeText(textToCopy).then(() => {
             // Show the success feedback
             showSuccess();
-            
+
             // Reset back to default after 2 seconds
             setTimeout(() => {
                 resetToDefault();
             }, 2000);
         }).catch(err => {
-            console.error('Failed to copy text: ', err); 
+            console.error('Failed to copy text: ', err);
         });
     });
 

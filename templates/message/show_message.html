@@ -1,0 +1,14 @@
+{% extends '../_base.html' %}
+
+
+{% block content %}
+    <div class="container mx-auto mt-12">
+
+        <!-- Message form -->
+        <div class="min-w-lg mx-auto bg-white p-8 rounded-lg shadow-sm">
+            <article class="markdown-content text-slate-800 prose lg:prose-xl">
+                {{ message|safe }}
+            </article>
+        </div>
+    </div>
+{% endblock %}

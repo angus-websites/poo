@@ -1,26 +1,27 @@
-{% extends "shortener/../_base.html" %}
+{% extends '../_base.html' %}
 
 {% block content %}
     <div class="container mx-auto mt-12">
         <!-- Include the header -->
         {% include "shortener/../_header.html" %}
 
-        <!-- URL Shortening Form -->
+        <!-- Message form -->
         <div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
             <form method="post" class="space-y-6">
                 {% csrf_token %}
 
-                <!-- Original URL Input Field -->
+                <!-- Message text input field -->
                 <div>
-                    <label for="original_url" class="block text-gray-700 font-medium mb-2">Enter URL to shorten</label>
-                    <input
-                        type="url"
-                        name="original_url"
-                        id="original_url"
+                    <label for="content" class="block text-gray-700 font-medium mb-2">Enter your message</label>
+                    <textarea
+                        name="content"
+                        id="content"
                         class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600"
-                        placeholder="https://example.com"
+                        rows="5"
+                        placeholder="Your message here"
                         required
-                    >
+                        maxlength="50000"
+                    >{{ content|default:'' }}</textarea>
                 </div>
 
                 <!-- Submit Button -->
@@ -28,9 +29,9 @@
                     type="submit"
                     class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-3 rounded-md transition duration-300"
                 >
-                    Shorten URL
+                    Generate Link
                 </button>
             </form>
         </div>
     </div>
-{% endblock content %}
+{% endblock %}
