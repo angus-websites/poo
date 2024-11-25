@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
+
+from poo.util import shorten
 from .models import URL
 from .utils import generate_short_code
 from django.http import HttpRequest, HttpResponse
@@ -12,17 +14,8 @@ def shorten_url(request: HttpRequest) -> HttpResponse:
         if not original_url:
             return render(request, 'shortener/index.html', {'error': 'URL is required'})
 
-        # Check if the URL already exists in the database
-        existing_url = URL.objects.filter(original_url=original_url).first()
-        if existing_url:
-            # If the URL already exists, use the existing short code
-            short_code = existing_url.short_code
-        else:
-            # Generate a unique short code since the URL does not exist
-            short_code = generate_short_code()
-
-            # Save the URL to the database
-            URL.objects.create(original_url=original_url, short_code=short_code)
+        # Shorten the URL
+        short_code = shorten(original_url)
 
         # Redirect to the view that displays the shortened URL
         return redirect('shortened', short_code=short_code)
