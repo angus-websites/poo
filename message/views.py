@@ -1,5 +1,6 @@
+from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
-
+import markdown
 from shortener.models import URL
 from shortener.utils import generate_short_code
 from .models import Message
@@ -15,8 +16,14 @@ def create_message(request):
 
         content = request.POST.get('content')
 
-        if not content or len(content) > 1000:
-            return HttpResponseBadRequest("Content is required and must be 1000 characters or less.")
+        if len(content) > 5000:
+            messages.error(request, 'Message is too long. Please keep it under 5000 characters.')
+            # Redirect with error message
+            return redirect('create_message')
+        elif not content:
+            messages.error(request, 'Message cannot be empty.')
+            # Redirect with error message
+            return redirect('create_message')
 
         # Strip any script tags from the content
         content = content.replace('<script>', '').replace('</script>', '')
@@ -55,5 +62,15 @@ def create_message(request):
 # View to display a message
 def show_message(request, slug):
     message = get_object_or_404(Message, slug=slug)
-    return render(request, 'message/show_message.html', {'message': message})
+
+    # Convert Markdown content to HTML
+    markdown_content = markdown.markdown(
+        message.content,
+        extensions=[
+            'markdown.extensions.extra',     # Support tables, code blocks, etc.
+            'markdown.extensions.codehilite', # Code highlighting (if needed)
+        ]
+    )
+
+    return render(request, 'message/show_message.html', {'message': markdown_content})
 

@@ -63,7 +63,6 @@ INSTALLED_APPS = [
     "shortener",
     "compressor",
     "message",
-    "markdownify"
 ]
 
 MARKDOWNIFY = {
@@ -72,7 +71,6 @@ MARKDOWNIFY = {
             "markdown.extensions.fenced_code",
             "markdown.extensions.codehilite",
         ],
-        "STRIP": True,
     }
 }
 
