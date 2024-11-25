@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.utils.crypto import get_random_string
 from .models import Message
 from django.urls import reverse
 from django.http import HttpResponseBadRequest
@@ -10,7 +9,9 @@ from .utils import generate_message_code
 # View to create a new message
 def create_message(request):
     if request.method == 'POST':
-        content = request.POST.get('content', '').strip()
+
+        content = request.POST.get('content')
+
         if not content or len(content) > 1000:
             return HttpResponseBadRequest("Content is required and must be 1000 characters or less.")
 

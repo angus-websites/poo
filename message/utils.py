@@ -18,7 +18,7 @@ def generate_message_code(initial_length: int = 6, max_length: int = 10) -> str:
         # Attempt to generate a unique short code
         for _ in range(100):  # Try 100 times before increasing the length
             code = ''.join(random.choice(characters) for _ in range(length))
-            if not Message.objects.filter(short_code=code).exists():
+            if not Message.objects.filter(slug=code).exists():
                 return code
 
         # If no unique code is found after 100 attempts, increase the length
