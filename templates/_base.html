@@ -30,11 +30,22 @@
         {% block content %}
         {% endblock content %}
     </div>
-
-    <!-- Footer Section -->
-    <footer class="bg-emerald-800 text-white text-center py-4 mt-12">
-        <p>&copy; <span id="year"></span> <strong>Poo</strong> | Designed by <a href="https://angusgoody.com/" target="_blank"><strong>Angus Goody</strong></a></p>
+    
+    <footer class="bg-emerald-800 text-white">
+        <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+          <span class="text-sm text-gray-50 sm:text-center ">© <span id="year"></span> <strong>Poo</strong> | Designed by <a href="https://angusgoody.com/" target="_blank"><strong>Angus Goody</strong></a>
+        </span>
+        <ul class="flex flex-wrap items-center mt-3 text-sm font-medium  sm:mt-0">
+            <li>
+                <a href="{% url 'shorten_url' %}" class="hover:underline me-4 md:me-6">Shortener</a>
+            </li>
+            <li>
+                <a href="{% url 'create_message' %}" class="hover:underline me-4 md:me-6">Create a message</a>
+            </li>
+        </ul>
+        </div>
     </footer>
+
 
     <script>
         // Dynamically set the current year in the footer

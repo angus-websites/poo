@@ -62,7 +62,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "shortener",
     "compressor",
-    "messager"
+    "message"
 ]
 
 if os.getenv('CSRF_HOSTS', False):
