@@ -18,8 +18,8 @@ def create_message(request):
 
         if len(content) > 5000:
             messages.error(request, 'Message is too long. Please keep it under 5000 characters.')
-            # Redirect with error message
-            return redirect('create_message')
+            # Render the form
+            return render(request, 'message/create_message.html', {'content': content})
         elif not content:
             messages.error(request, 'Message cannot be empty.')
             # Redirect with error message
@@ -53,8 +53,6 @@ def create_message(request):
 
             # Redirect to the view that displays the shortened URL
             return redirect('shortened', short_code=short_code)
-
-
 
     return render(request, 'message/create_message.html')
 

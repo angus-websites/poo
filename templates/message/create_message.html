@@ -20,7 +20,8 @@
                         rows="5"
                         placeholder="Your message here"
                         required
-                    ></textarea>
+                        maxlength="50000"
+                    >{{ content|default:'' }}</textarea>
                 </div>
 
                 <!-- Submit Button -->
