@@ -20,7 +20,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('shortener.urls')),         # Main app routing
 
-    path('message/', include('message.urls')), # Messager app routing
+    path('message/', include('message.urls')),   # Message app routing
 ]
 
 
