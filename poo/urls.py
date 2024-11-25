@@ -18,7 +18,9 @@ from django.contrib import admin
 from django.urls import path, include
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('', include('shortener.urls')),  # Main app routing
+    path('', include('shortener.urls')),         # Main app routing
+
+    path('messager/', include('messager.urls')), # Messager app routing
 ]
 
 
