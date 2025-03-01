@@ -5,6 +5,7 @@ from .models import URL
 from .utils import generate_short_code
 from django.http import HttpRequest, HttpResponse
 
+
 def shorten_url(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
         # Retrieve the original URL from POST data
@@ -14,14 +15,18 @@ def shorten_url(request: HttpRequest) -> HttpResponse:
         if not original_url:
             return render(request, 'shortener/index.html', {'error': 'URL is required'})
 
+        # Get the hide_preview value from the POST data
+        hide_preview = request.POST.get('hide_preview', False)
+
         # Shorten the URL
-        short_code = shorten(original_url)
+        short_code = shorten(original_url, hide_preview)
 
         # Redirect to the view that displays the shortened URL
         return redirect('shortened', short_code=short_code)
 
     # Render the form if the request method is not POST
     return render(request, 'shortener/index.html')
+
 
 def shortened_url(request: HttpRequest, short_code: str) -> HttpResponse:
     """View to display the shortened URL."""
