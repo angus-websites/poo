@@ -36,11 +36,16 @@ def shortened_url(request: HttpRequest, short_code: str) -> HttpResponse:
 
     return render(request, 'shortener/shortened.html', {'short_url': request.build_absolute_uri(f"/{short_code}")})
 
+
 def redirect_url(request: HttpRequest, short_code: str) -> HttpResponse:
     url = get_object_or_404(URL, short_code=short_code)
 
     # Update the access information
     url.record_access()
+
+    # If hide_preview is enabled, display the forward page
+    if url.hide_preview:
+        return render(request, 'shortener/forward.html', {'original_url': url.original_url})
 
     # Redirect to the original URL
     return redirect(url.original_url)

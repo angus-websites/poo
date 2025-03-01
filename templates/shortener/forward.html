@@ -1,0 +1,22 @@
+{% extends "shortener/../_base.html" %}
+
+{% block content %}
+    <div class="container mx-auto mt-12">
+        <!-- Include the header -->
+        {% include "shortener/../_header.html" %}
+
+        <div class="max-w-lg mx-auto text-center">
+            <p>If not automatically redirected, click the link below ...</p>
+
+            <a href="{{ original_url }}" class="mt-5 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold transition duration-300 rounded-lg py-2 px-2.5 inline-flex items-center justify-center">
+                Visit
+            </a>
+        </div>
+    </div>
+    <script>
+    // Wait for the page to load and redirect to the original URL
+    document.addEventListener('DOMContentLoaded', function () {
+        window.location.href = "{{ original_url }}";
+    });
+    </script>
+{% endblock content %}
