@@ -5,4 +5,17 @@
 
 A simple url shortener service.
 
+## Getting Started
+
+Migrate the database:
+
+```bash
+python manage.py migrate
+```
+
+Run the server:
+
+```bash
+python manage.py runserver
+```
 
