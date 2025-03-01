@@ -10,6 +10,7 @@ class URL(models.Model):
     original_url = models.URLField()                            # Original URL
     short_code = models.CharField(max_length=10, unique=True)   # Short code for the URL
     created_at = models.DateTimeField(auto_now_add=True)        # Creation timestamp
+    hide_preview = models.BooleanField(default=False)           # Require click before redirecting
 
     last_accessed = models.DateTimeField(null=True, blank=True) # Last accessed timestamp
     clicks = models.PositiveIntegerField(default=0)             # Number of times the URL was accessed
